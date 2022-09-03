@@ -1,3 +1,4 @@
 node_modules
-output
-input
+output/*.csv
+input/*.csv
+yarn.lock
