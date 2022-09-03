@@ -1,7 +1,7 @@
 const csv = require("csv-parser");
 const fs = require("fs");
-const URLs = [];
-const codes = [];
+const strings = [];
+const subStrings = [];
 
 const toCsv = (data) => {
   const header = Object.keys(data[0]).join(",");
@@ -10,29 +10,29 @@ const toCsv = (data) => {
   return csv;
 };
 
-const matchPairs = (codeArr, urlArr) => {
-  return codeArr.map((code, index) => {
-    const URL = urlArr.find((url) => url.includes(code));
+const matchPairs = (subStringArr, stringArr) => {
+  return subStringArr.map((substr, index) => {
+    const string = stringArr.find((str) => str.includes(substr));
     return {
-      ID: index + 1,
-      URL,
-      Code: code,
+      ID: index,
+      string,
+      substr,
     };
   });
 };
 
 fs.createReadStream(__dirname + "/db/data.csv")
-  .pipe(csv(["url", "code"]))
-  .on("data", ({ url, code }) => {
-    if (url) {
-      URLs.push(url);
+  .pipe(csv(["string", "substr"]))
+  .on("data", ({ string, substr }) => {
+    if (string) {
+      strings.push(string);
     }
 
-    if (code) {
-      codes.push(code);
+    if (substr) {
+      subStrings.push(substr);
     }
   })
   .on("end", () => {
-    const matched = matchPairs(codes, URLs);
+    const matched = matchPairs(subStrings, strings);
     fs.writeFileSync("./dist/data.csv", toCsv(matched));
   });
