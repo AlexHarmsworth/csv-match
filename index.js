@@ -23,14 +23,14 @@ const matchPairs = (subStringArr, stringArr) => {
 };
 
 fs.createReadStream(__dirname + "/input/data.csv")
-  .pipe(csv(["string", "substr"]))
-  .on("data", ({ string, substr }) => {
+  .pipe(csv(["string", "substring"]))
+  .on("data", ({ string, substring }) => {
     if (string) {
       strings.push(string);
     }
 
-    if (substr) {
-      subStrings.push(substr);
+    if (substring) {
+      subStrings.push(substring);
     }
   })
   .on("end", () => {

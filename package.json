@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "match": "node index.js"
+  },
   "dependencies": {
     "csv-parser": "^3.0.0"
   }
