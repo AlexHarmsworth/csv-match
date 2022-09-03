@@ -13,6 +13,7 @@ const toCsv = (data) => {
 const matchPairs = (subStringArr, stringArr) => {
   return subStringArr.map((substr, index) => {
     const string = stringArr.find((str) => str.includes(substr));
+    console.log(`Matched "${substr}" to "${string}"`);
     return {
       ID: index,
       string,
@@ -21,7 +22,7 @@ const matchPairs = (subStringArr, stringArr) => {
   });
 };
 
-fs.createReadStream(__dirname + "/db/data.csv")
+fs.createReadStream(__dirname + "/input/data.csv")
   .pipe(csv(["string", "substr"]))
   .on("data", ({ string, substr }) => {
     if (string) {
@@ -34,5 +35,5 @@ fs.createReadStream(__dirname + "/db/data.csv")
   })
   .on("end", () => {
     const matched = matchPairs(subStrings, strings);
-    fs.writeFileSync("./dist/data.csv", toCsv(matched));
+    fs.writeFileSync("./output/data.csv", toCsv(matched));
   });
